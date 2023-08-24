@@ -29,6 +29,10 @@ public class ventanaAgregaUsuarios extends javax.swing.JFrame {
         initComponents();
         cx=new ConexionDB();
         cx.conectar();
+        
+        
+        
+      
     }
 
     /**

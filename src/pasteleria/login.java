@@ -7,8 +7,13 @@ package pasteleria;
 import main.main;
 import conexion.ConexionDB;
 import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import static java.lang.System.exit;
 import java.sql.Connection;
@@ -25,22 +30,21 @@ import static javax.swing.JOptionPane.showMessageDialog;
  *
  * @author israe
  */
+
 public class login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    
     private ConexionDB cx;
     public login() {
         
         initComponents();
         oculta.setVisible(false);
         cx=new ConexionDB();
-        cx.conectar();
+        cx.conectar();   
         
     }
     
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,8 +60,8 @@ public class login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabelPastel = new javax.swing.JLabel();
         labelUsuario = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        btnIngresar = new javax.swing.JButton();
+        labelBtnCancelar = new javax.swing.JLabel();
+        labelBtnIngresar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -76,7 +80,9 @@ public class login extends javax.swing.JFrame {
         jLabelFondoLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1000, 562));
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 560));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
@@ -99,7 +105,7 @@ public class login extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, -1, 80));
 
         jLabelPastel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pastel login.png"))); // NOI18N
-        jPanel1.add(jLabelPastel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
+        jPanel1.add(jLabelPastel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 260, 250));
 
         labelUsuario.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
         labelUsuario.setForeground(new java.awt.Color(0, 0, 0));
@@ -107,29 +113,22 @@ public class login extends javax.swing.JFrame {
         labelUsuario.setText("USUARIO: ");
         jPanel1.add(labelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(401, 70, 290, -1));
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("CANCELAR");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        labelBtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/buttoncancelar.png"))); // NOI18N
+        labelBtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelBtnCancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 430, -1, -1));
+        jPanel1.add(labelBtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 130, 50));
 
-        btnIngresar.setBackground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btnIngresar.setForeground(new java.awt.Color(0, 0, 0));
-        btnIngresar.setText("INGRESAR");
-        btnIngresar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+        labelBtnIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/buttonIngresa.png"))); // NOI18N
+        labelBtnIngresar.setText("jLabel13");
+        labelBtnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelBtnIngresarMouseClicked(evt);
             }
         });
-        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, 140, -1));
+        jPanel1.add(labelBtnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 430, 130, 50));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondo icono pastel.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, -1, 80));
@@ -204,6 +203,8 @@ public class login extends javax.swing.JFrame {
 
         jLabelFondoLogin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabelFondoLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoPantallaLogin.jpg"))); // NOI18N
+        jLabelFondoLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabelFondoLogin.setMinimumSize(new java.awt.Dimension(100, 562));
         jLabelFondoLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelFondoLoginMouseClicked(evt);
@@ -215,7 +216,9 @@ public class login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,20 +226,16 @@ public class login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelFondoLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFondoLoginMouseClicked
 
     }//GEN-LAST:event_jLabelFondoLoginMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        System.exit(WIDTH);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void passwordTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxtActionPerformed
         // TODO add your handling code here:
-        btnIngresarActionPerformed(evt);
+  
     }//GEN-LAST:event_passwordTxtActionPerformed
 
     private void verMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verMouseClicked
@@ -258,8 +257,14 @@ public class login extends javax.swing.JFrame {
         passwordTxt.requestFocus(); // Cambia el foco al siguiente componente
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        try {
+    private void labelBtnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBtnCancelarMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_labelBtnCancelarMouseClicked
+
+    private void labelBtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBtnIngresarMouseClicked
+        // TODO add your handling code here:
+      try {
     String usuario = txtUsuario.getText();
     String password = String.valueOf(passwordTxt.getPassword());
     String query = "SELECT * FROM USUARIOS WHERE CORREO='" + usuario + "' AND CONTRASENA ='" + password + "'";
@@ -268,14 +273,23 @@ public class login extends javax.swing.JFrame {
     ResultSet rs = st.executeQuery(query);
     
     if (rs.next()) {
-        String tipoUsuario = rs.getString("TIPO_USUARIO"); // Asumiendo que el tipo de usuario está en una columna llamada "TIPO_USUARIO"
+        String tipoUsuario = rs.getString("TIPO_USUARIO");
         if ("ADMIN".equals(tipoUsuario)) {
-            System.out.println("acceso como administrador");
-            //JOptionPane.showMessageDialog(null, "Bienvenido Administrador");
+            //System.out.println("Acceso como administrador");
+            String nombreCompleto = rs.getString("NOMBRE") + " " + rs.getString("APELLIDO_PATERNO") + " " + rs.getString("APELLIDO_MATERNO");
+            String correoUsuario = rs.getString("CORREO");
+           
+            
+            // Mostrar en un JOptionPane
+            String mensaje = "Acceso como administrador\nNombre completo: " + nombreCompleto + "\nCorreo: " + correoUsuario;
+            JOptionPane.showMessageDialog(null, mensaje);
+            
+            // Abre la ventana de administrador
             new ventanaAdmin().setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Bienvenido Usuario");
-            System.out.println("acceso como usuario");
+            System.out.println("Acceso como usuario");
         }
     } else {
         JOptionPane.showMessageDialog(null, "Usuario no encontrado en la base de datos");
@@ -284,7 +298,7 @@ public class login extends javax.swing.JFrame {
     Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
 }
 
-    }//GEN-LAST:event_btnIngresarActionPerformed
+    }//GEN-LAST:event_labelBtnIngresarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -321,8 +335,6 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -339,6 +351,8 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPastel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelBtnCancelar;
+    private javax.swing.JLabel labelBtnIngresar;
     private javax.swing.JLabel labelUsuario;
     private javax.swing.JLabel labelUsuario1;
     private javax.swing.JLabel oculta;
